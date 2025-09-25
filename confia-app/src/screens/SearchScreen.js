@@ -18,6 +18,11 @@ export default function SearchScreen({ navigation }) {
           onPress={() => navigation.navigate("CreateService")}
           color="#007BFF"
         />
+        <Button
+          title="Ver Usuários"
+          onPress={() => navigation.navigate("ViewUsers")}
+          color="#28a745"
+        />
       </View>
 
       {loading ? (

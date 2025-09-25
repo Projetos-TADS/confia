@@ -53,6 +53,26 @@ async function createReview(review) {
   return { id: result.lastID, ...review };
 }
 
+async function updateUser(id, userData) {
+  const db = await openDb();
+  const result = await db.run(
+    "UPDATE Users SET name = ?, email = ?, password = ?, userType = ?, location = ? WHERE id = ?",
+    userData.name,
+    userData.email,
+    userData.password,
+    userData.userType,
+    userData.location,
+    id
+  );
+  return result.changes > 0 ? { id, ...userData } : null;
+}
+
+async function deleteUser(id) {
+  const db = await openDb();
+  const result = await db.run("DELETE FROM Users WHERE id = ?", id);
+  return result.changes;
+}
+
 export default {
   getUsers,
   createUser,
@@ -60,4 +80,6 @@ export default {
   createService,
   getReviews,
   createReview,
+  updateUser,
+  deleteUser,
 };

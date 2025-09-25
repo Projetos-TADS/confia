@@ -67,3 +67,50 @@ export async function createService(serviceData) {
     throw error;
   }
 }
+
+export async function getUsers() {
+  try {
+    const response = await fetch(`${API_URL}/users`);
+    if (!response.ok) {
+      throw new Error("Falha ao buscar usuários");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao buscar usuários:", error);
+    return [];
+  }
+}
+
+export async function updateUser(id, userData) {
+  try {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Falha ao atualizar usuário");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao atualizar usuário:", error);
+    throw error;
+  }
+}
+
+export async function deleteUser(id) {
+  try {
+    const response = await fetch(`${API_URL}/users/${id}`, {
+      method: "DELETE",
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Falha ao deletar usuário");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro ao deletar usuário:", error);
+    throw error;
+  }
+}

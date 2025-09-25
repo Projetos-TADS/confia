@@ -5,6 +5,9 @@ import LoginScreen from "../screens/LoginScreen";
 import ReviewsScreen from "../screens/ReviewsScreen";
 import SearchScreen from "../screens/SearchScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import UpdateUserScreen from "../screens/UpdateUserScreen";
+import UserDetailsScreen from "../screens/UserDetailsScreen";
+import ViewUsersScreen from "../screens/ViewUsersScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +31,21 @@ export default function AppNavigation() {
           name="CreateService"
           component={CreateServiceScreen}
           options={{ title: "Adicionar Serviço" }}
+        />
+        <Stack.Screen
+          name="ViewUsers"
+          component={ViewUsersScreen}
+          options={{ title: "Usuários" }}
+        />
+        <Stack.Screen
+          name="UserDetails"
+          component={UserDetailsScreen}
+          options={({ route }) => ({ title: route.params.userName })}
+        />
+        <Stack.Screen
+          name="UpdateUser"
+          component={UpdateUserScreen}
+          options={{ title: "Editar Usuário" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
