@@ -2,8 +2,9 @@ import { ActivityIndicator, Button, FlatList, StyleSheet, Text, View } from "rea
 import ServiceCard from "../components/ServiceCard";
 import { useServices } from "../hooks/useServices";
 
-export default function SearchScreen({ navigation }) {
+export default function SearchScreen({ route, navigation }) {
   const { services, loading, refetch } = useServices();
+  const { user } = route.params;
 
   return (
     <View style={styles.container}>
@@ -13,11 +14,13 @@ export default function SearchScreen({ navigation }) {
           onPress={() => navigation.navigate("Reviews")}
           color="#841584"
         />
-        <Button
-          title="Oferecer Serviço"
-          onPress={() => navigation.navigate("CreateService")}
-          color="#007BFF"
-        />
+        {user.userType === "provider" && (
+          <Button
+            title="Oferecer Serviço"
+            onPress={() => navigation.navigate("CreateService")}
+            color="#007BFF"
+          />
+        )}
         <Button
           title="Ver Usuários"
           onPress={() => navigation.navigate("ViewUsers")}

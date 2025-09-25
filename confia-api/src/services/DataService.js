@@ -5,6 +5,11 @@ async function getUsers() {
   return db.all("SELECT * FROM Users");
 }
 
+async function getUserByEmail(email) {
+  const db = await openDb();
+  return db.get("SELECT * FROM Users WHERE email = ?", email);
+}
+
 async function createUser(user) {
   const db = await openDb();
   const result = await db.run(
@@ -75,6 +80,7 @@ async function deleteUser(id) {
 
 export default {
   getUsers,
+  getUserByEmail,
   createUser,
   getServices,
   createService,

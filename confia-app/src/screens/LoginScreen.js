@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { login } from "../data/api";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Erro", "Por favor, preencha o e-mail e a senha.");
       return;
     }
-    console.log("Login attempt with:", email, password);
-    navigation.navigate("Search");
+    try {
+      const user = await login(email, password);
+      navigation.navigate("Search", { user: user });
+    } catch (error) {
+      Alert.alert("Erro de Login", error.message);
+    }
   };
 
   return (

@@ -1,5 +1,25 @@
 import { API_URL } from "./config";
 
+export async function login(email, password) {
+  try {
+    const response = await fetch(`${API_URL}/users/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Falha no login");
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Erro no login:", error);
+    throw error;
+  }
+}
+
 export async function getServices() {
   try {
     const response = await fetch(`${API_URL}/services`);

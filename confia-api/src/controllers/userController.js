@@ -1,6 +1,27 @@
 import DataService from "../services/DataService.js";
 import User from "../models/userModel.js";
 
+async function loginUser(req, res) {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ message: "E-mail e senha são obrigatórios." });
+    }
+
+    const user = await DataService.getUserByEmail(email);
+
+    if (!user || user.password !== password) {
+      return res.status(401).json({ message: "Credenciais inválidas." });
+    }
+
+    const { password: _, ...userToReturn } = user;
+    res.status(200).json(userToReturn);
+  } catch (error) {
+    console.error("Falha no login:", error);
+    res.status(500).json({ message: "Erro ao tentar fazer login." });
+  }
+}
+
 async function getUsers(req, res) {
   try {
     const users = await DataService.getUsers();
@@ -28,6 +49,7 @@ async function createUser(req, res) {
 
     res.status(201).json(createdUser);
   } catch (error) {
+    console.error("Falha ao criar usuário:", error);
     res.status(500).json({ message: "Erro ao criar usuário." });
   }
 }
@@ -62,4 +84,4 @@ async function deleteUser(req, res) {
   }
 }
 
-export default { getUsers, createUser, updateUser, deleteUser };
+export default { loginUser, getUsers, createUser, updateUser, deleteUser };
