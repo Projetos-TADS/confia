@@ -6,28 +6,48 @@ export default function UpdateUserScreen({ route, navigation }) {
   const { userId } = route.params;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [location, setLocation] = useState("");
   const [userType, setUserType] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
-      const users = await getUsers();
-      const user = users.find((u) => u.id === userId);
-      if (user) {
-        setName(user.name);
-        setEmail(user.email);
-        setPassword(user.password);
-        setLocation(user.location);
-        setUserType(user.userType);
+      try {
+        const users = await getUsers();
+        const user = users.find((u) => u.id === userId);
+        if (user) {
+          setName(user.name);
+          setEmail(user.email);
+          setLocation(user.location);
+          setUserType(user.userType);
+        }
+      } catch (error) {
+        Alert.alert("Erro", "Não foi possível carregar os dados do usuário.");
       }
     };
     fetchUserData();
   }, [userId]);
 
   const handleUpdate = async () => {
+    if (newPassword && newPassword !== confirmPassword) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return;
+    }
+
     try {
-      await updateUser(userId, { name, email, password, location, userType });
+      const userData = {
+        name,
+        email,
+        location,
+        userType,
+      };
+
+      if (newPassword) {
+        userData.password = newPassword;
+      }
+
+      await updateUser(userId, userData);
       Alert.alert("Sucesso", "Usuário atualizado com sucesso!");
       navigation.goBack();
     } catch (error) {
@@ -42,9 +62,16 @@ export default function UpdateUserScreen({ route, navigation }) {
       <TextInput style={styles.input} placeholder="Email" value={email} onChangeText={setEmail} />
       <TextInput
         style={styles.input}
-        placeholder="Senha"
-        value={password}
-        onChangeText={setPassword}
+        placeholder="Nova Senha"
+        value={newPassword}
+        onChangeText={setNewPassword}
+        secureTextEntry
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirmar Nova Senha"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
         secureTextEntry
       />
       <TextInput

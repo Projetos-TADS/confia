@@ -1,5 +1,6 @@
 import DataService from "../services/DataService.js";
 import User from "../models/userModel.js";
+import bcrypt from "bcryptjs";
 
 async function loginUser(req, res) {
   try {
@@ -10,7 +11,7 @@ async function loginUser(req, res) {
 
     const user = await DataService.getUserByEmail(email);
 
-    if (!user || user.password !== password) {
+    if (!user || !bcrypt.compareSync(password, user.password)) {
       return res.status(401).json({ message: "Credenciais inválidas." });
     }
 
@@ -38,13 +39,13 @@ async function createUser(req, res) {
       return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
-    const users = await DataService.getUsers();
-    const emailExists = users.some((user) => user.email === email);
+    const emailExists = await DataService.getUserByEmail(email);
     if (emailExists) {
       return res.status(400).json({ message: "E-mail já está em uso." });
     }
 
-    const newUser = new User(null, name, email, password, userType, location);
+    const hashedPassword = bcrypt.hashSync(password, 8);
+    const newUser = new User(null, name, email, hashedPassword, userType, location);
     const createdUser = await DataService.createUser(newUser);
 
     res.status(201).json(createdUser);
@@ -57,6 +58,12 @@ async function createUser(req, res) {
 async function updateUser(req, res) {
   try {
     const { id } = req.params;
+    const { password } = req.body;
+
+    if (password) {
+      req.body.password = bcrypt.hashSync(password, 8);
+    }
+
     const updatedUser = await DataService.updateUser(id, req.body);
     if (updatedUser) {
       res.status(200).json(updatedUser);

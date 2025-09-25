@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Alert, Button, ScrollView, StyleSheet, Text, TextInput } from "react-native";
 import { createService } from "../data/api";
 
-export default function CreateServiceScreen({ navigation }) {
-  const [providerId, setProviderId] = useState("");
+export default function CreateServiceScreen({ route, navigation }) {
+  const { providerId } = route.params;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
 
   const handleCreateService = async () => {
-    if (!providerId || !title || !description || !category || !price) {
+    if (!title || !description || !category || !price) {
       Alert.alert("Erro", "Todos os campos são obrigatórios.");
       return;
     }
@@ -21,7 +21,7 @@ export default function CreateServiceScreen({ navigation }) {
 
     try {
       const serviceData = {
-        providerId: parseInt(providerId),
+        providerId,
         title,
         description,
         category,
@@ -44,13 +44,6 @@ export default function CreateServiceScreen({ navigation }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Ofereça seu Serviço</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Seu ID de Prestador (Ex: 1, 2)"
-        value={providerId}
-        onChangeText={setProviderId}
-        keyboardType="numeric"
-      />
       <TextInput
         style={styles.input}
         placeholder="Título do Serviço (Ex: Eletricista Residencial)"

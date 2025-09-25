@@ -12,7 +12,7 @@ export default function SearchScreen({ route, navigation }) {
         {user.userType === "provider" && (
           <Button
             title="Oferecer Serviço"
-            onPress={() => navigation.navigate("CreateService")}
+            onPress={() => navigation.navigate("CreateService", { providerId: user.id })}
             color="#007BFF"
           />
         )}
