@@ -60,16 +60,23 @@ async function createReview(review) {
 
 async function updateUser(id, userData) {
   const db = await openDb();
+  const currentUser = await db.get("SELECT * FROM Users WHERE id = ?", id);
+  if (!currentUser) {
+    return null;
+  }
+
+  const updatedData = { ...currentUser, ...userData };
+
   const result = await db.run(
     "UPDATE Users SET name = ?, email = ?, password = ?, userType = ?, location = ? WHERE id = ?",
-    userData.name,
-    userData.email,
-    userData.password,
-    userData.userType,
-    userData.location,
+    updatedData.name,
+    updatedData.email,
+    updatedData.password,
+    updatedData.userType,
+    updatedData.location,
     id
   );
-  return result.changes > 0 ? { id, ...userData } : null;
+  return result.changes > 0 ? updatedData : null;
 }
 
 async function deleteUser(id) {

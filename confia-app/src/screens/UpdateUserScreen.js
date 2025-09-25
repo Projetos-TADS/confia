@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Alert, Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { getUsers, updateUser } from "../data/api";
 
 export default function UpdateUserScreen({ route, navigation }) {
@@ -7,7 +7,7 @@ export default function UpdateUserScreen({ route, navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [location, setLocation] = useState("");
-  const [userType, setUserType] = useState("");
+  const [userType, setUserType] = useState("client");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -80,20 +80,55 @@ export default function UpdateUserScreen({ route, navigation }) {
         value={location}
         onChangeText={setLocation}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="Tipo (client/provider)"
-        value={userType}
-        onChangeText={setUserType}
-      />
+
+      <View style={styles.userTypeContainer}>
+        <Text style={styles.userTypeLabel}>Eu sou:</Text>
+        <TouchableOpacity
+          style={[styles.userTypeButton, userType === "client" && styles.userTypeButtonSelected]}
+          onPress={() => setUserType("client")}
+        >
+          <Text
+            style={[
+              styles.userTypeButtonText,
+              userType === "client" && styles.userTypeButtonTextSelected,
+            ]}
+          >
+            Cliente
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.userTypeButton, userType === "provider" && styles.userTypeButtonSelected]}
+          onPress={() => setUserType("provider")}
+        >
+          <Text
+            style={[
+              styles.userTypeButtonText,
+              userType === "provider" && styles.userTypeButtonTextSelected,
+            ]}
+          >
+            Prestador
+          </Text>
+        </TouchableOpacity>
+      </View>
+
       <Button title="Salvar Alterações" onPress={handleUpdate} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: "#f5f5f5" },
-  title: { fontSize: 24, fontWeight: "bold", textAlign: "center", marginBottom: 24 },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#f5f5f5",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 24,
+  },
   input: {
     height: 40,
     borderColor: "gray",
@@ -102,5 +137,36 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     paddingHorizontal: 8,
     backgroundColor: "white",
+  },
+  userTypeContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  userTypeLabel: {
+    marginRight: 10,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+  userTypeButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#007BFF",
+    marginHorizontal: 5,
+    backgroundColor: "#E0E0E0",
+  },
+  userTypeButtonSelected: {
+    backgroundColor: "#007BFF",
+    borderColor: "#007BFF",
+  },
+  userTypeButtonText: {
+    color: "#007BFF",
+    fontWeight: "bold",
+  },
+  userTypeButtonTextSelected: {
+    color: "white",
   },
 });

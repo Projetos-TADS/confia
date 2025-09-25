@@ -58,7 +58,14 @@ async function createUser(req, res) {
 async function updateUser(req, res) {
   try {
     const { id } = req.params;
-    const { password } = req.body;
+    const { email, password } = req.body;
+
+    if (email) {
+      const existingUser = await DataService.getUserByEmail(email);
+      if (existingUser && existingUser.id !== parseInt(id)) {
+        return res.status(400).json({ message: "E-mail já está em uso." });
+      }
+    }
 
     if (password) {
       req.body.password = bcrypt.hashSync(password, 8);
