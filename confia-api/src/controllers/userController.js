@@ -1,14 +1,12 @@
 import DataService from "../services/DataService.js";
 import User from "../models/userModel.js";
 
-const usersFile = "users.json";
-
 async function getUsers(req, res) {
   try {
-    const users = await DataService.readData(usersFile);
+    const users = await DataService.getUsers();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ message: "Error reading user data." });
+    res.status(500).json({ message: "Erro ao ler os dados do usuário." });
   }
 }
 
@@ -16,24 +14,21 @@ async function createUser(req, res) {
   try {
     const { name, email, password, userType, location } = req.body;
     if (!name || !email || !password || !userType || !location) {
-      return res.status(400).json({ message: "All fields are required." });
+      return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
-    const users = await DataService.readData(usersFile);
+    const users = await DataService.getUsers();
     const emailExists = users.some((user) => user.email === email);
     if (emailExists) {
-      return res.status(400).json({ message: "Email already in use." });
+      return res.status(400).json({ message: "E-mail já está em uso." });
     }
 
-    const newId = users.length > 0 ? Math.max(...users.map((u) => u.id)) + 1 : 1;
-    const newUser = new User(newId, name, email, password, userType, location);
+    const newUser = new User(null, name, email, password, userType, location);
+    const createdUser = await DataService.createUser(newUser);
 
-    users.push(newUser);
-    await DataService.writeData(usersFile, users);
-
-    res.status(201).json(newUser);
+    res.status(201).json(createdUser);
   } catch (error) {
-    res.status(500).json({ message: "Error creating user." });
+    res.status(500).json({ message: "Erro ao criar usuário." });
   }
 }
 

@@ -1,14 +1,12 @@
 import DataService from "../services/DataService.js";
 import Service from "../models/serviceModel.js";
 
-const servicesFile = "services.json";
-
 async function getServices(req, res) {
   try {
-    const services = await DataService.readData(servicesFile);
+    const services = await DataService.getServices();
     res.status(200).json(services);
   } catch (error) {
-    res.status(500).json({ message: "Error reading service data." });
+    res.status(500).json({ message: "Erro ao ler os dados de serviço." });
   }
 }
 
@@ -16,19 +14,15 @@ async function createService(req, res) {
   try {
     const { providerId, title, description, category, price } = req.body;
     if (!providerId || !title || !description || !category || price === undefined) {
-      return res.status(400).json({ message: "All fields are required." });
+      return res.status(400).json({ message: "Todos os campos são obrigatórios." });
     }
 
-    const services = await DataService.readData(servicesFile);
-    const newId = services.length > 0 ? Math.max(...services.map((s) => s.id)) + 1 : 1;
-    const newService = new Service(newId, providerId, title, description, category, price);
+    const newService = new Service(null, providerId, title, description, category, price);
+    const createdService = await DataService.createService(newService);
 
-    services.push(newService);
-    await DataService.writeData(servicesFile, services);
-
-    res.status(201).json(newService);
+    res.status(201).json(createdService);
   } catch (error) {
-    res.status(500).json({ message: "Error creating service." });
+    res.status(500).json({ message: "Erro ao criar serviço." });
   }
 }
 
