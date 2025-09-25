@@ -9,11 +9,6 @@ export default function SearchScreen({ route, navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
-        <Button
-          title="Ver Avaliações"
-          onPress={() => navigation.navigate("Reviews")}
-          color="#841584"
-        />
         {user.userType === "provider" && (
           <Button
             title="Oferecer Serviço"
@@ -23,8 +18,19 @@ export default function SearchScreen({ route, navigation }) {
         )}
         <Button
           title="Ver Usuários"
-          onPress={() => navigation.navigate("ViewUsers")}
+          onPress={() => navigation.navigate("ViewUsers", { loggedInUserId: user.id })}
           color="#28a745"
+        />
+        <Button
+          title="Meu Perfil"
+          onPress={() =>
+            navigation.navigate("UserDetails", {
+              userId: user.id,
+              userName: user.name,
+              loggedInUserId: user.id,
+            })
+          }
+          color="#17a2b8"
         />
       </View>
 

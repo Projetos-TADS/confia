@@ -1,19 +1,21 @@
 import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function UserDetailsScreen({ route, navigation }) {
-  const { userId, userName } = route.params;
+  const { userId, userName, loggedInUserId } = route.params;
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Detalhes de</Text>
       <Text style={styles.userName}>{userName}</Text>
       <Text style={styles.userId}>ID: {userId}</Text>
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Editar Usuário"
-          onPress={() => navigation.navigate("UpdateUser", { userId: userId })}
-        />
-      </View>
+      {userId === loggedInUserId && (
+        <View style={styles.buttonContainer}>
+          <Button
+            title="Editar Perfil"
+            onPress={() => navigation.navigate("UpdateUser", { userId: userId })}
+          />
+        </View>
+      )}
     </View>
   );
 }

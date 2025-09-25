@@ -11,9 +11,9 @@ import {
 } from "react-native";
 import { deleteUser, getUsers } from "../data/api";
 
-function UserCard({ user, onDelete, onViewDetails }) {
+function UserCard({ user, onDelete, onViewDetails, loggedInUserId }) {
   const handleDelete = () => {
-    Alert.alert("Confirmar Exclusão", `Tem certeza que deseja excluir ${user.name}?`, [
+    Alert.alert("Confirmar Exclusão", `Tem certeza que deseja excluir seu perfil?`, [
       { text: "Cancelar", style: "cancel" },
       { text: "Excluir", onPress: () => onDelete(user.id), style: "destructive" },
     ]);
@@ -21,19 +21,22 @@ function UserCard({ user, onDelete, onViewDetails }) {
 
   return (
     <View style={styles.card}>
-      <TouchableOpacity onPress={() => onViewDetails(user)}>
+      <TouchableOpacity onPress={() => onViewDetails(user)} style={{ flex: 1 }}>
         <Text style={styles.cardTitle}>{user.name}</Text>
         <Text>{user.email}</Text>
         <Text style={styles.userType}>{user.userType}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
-        <Text style={styles.deleteButtonText}>Excluir</Text>
-      </TouchableOpacity>
+      {user.id === loggedInUserId && (
+        <TouchableOpacity onPress={handleDelete} style={styles.deleteButton}>
+          <Text style={styles.deleteButtonText}>Excluir</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
 
-export default function ViewUsersScreen({ navigation }) {
+export default function ViewUsersScreen({ route, navigation }) {
+  const { loggedInUserId } = route.params;
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -54,14 +57,18 @@ export default function ViewUsersScreen({ navigation }) {
     try {
       await deleteUser(id);
       Alert.alert("Sucesso", "Usuário excluído com sucesso.");
-      fetchUsers();
+      navigation.navigate("Login");
     } catch (error) {
       Alert.alert("Erro", error.message);
     }
   };
 
   const handleViewDetails = (user) => {
-    navigation.navigate("UserDetails", { userId: user.id, userName: user.name });
+    navigation.navigate("UserDetails", {
+      userId: user.id,
+      userName: user.name,
+      loggedInUserId: loggedInUserId,
+    });
   };
 
   if (loading) {
@@ -74,7 +81,12 @@ export default function ViewUsersScreen({ navigation }) {
         data={users}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <UserCard user={item} onDelete={handleDeleteUser} onViewDetails={handleViewDetails} />
+          <UserCard
+            user={item}
+            onDelete={handleDeleteUser}
+            onViewDetails={handleViewDetails}
+            loggedInUserId={loggedInUserId}
+          />
         )}
         ListHeaderComponent={<Text style={styles.header}>Usuários Cadastrados</Text>}
         ListEmptyComponent={<Text style={styles.emptyText}>Nenhum usuário encontrado.</Text>}
@@ -107,6 +119,6 @@ const styles = StyleSheet.create({
   },
   cardTitle: { fontSize: 18, fontWeight: "bold" },
   userType: { fontStyle: "italic", color: "#666", marginTop: 4 },
-  deleteButton: { backgroundColor: "#ff4d4d", padding: 10, borderRadius: 5 },
+  deleteButton: { backgroundColor: "#ff4d4d", padding: 10, borderRadius: 5, marginLeft: 10 },
   deleteButtonText: { color: "white", fontWeight: "bold" },
 });
