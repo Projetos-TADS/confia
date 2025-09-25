@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "serviceId": 1,
+    "clientId": 201,
+    "rating": 5,
+    "comment": "Eletricista muito competente e rápido. Resolveu tudo no mesmo dia!"
+  },
+  {
+    "id": 2,
+    "serviceId": 2,
+    "clientId": 202,
+    "rating": 4,
+    "comment": "A equipe de limpeza fez um ótimo trabalho pós-obra. Faltou apenas um pequeno detalhe."
+  },
+  {
+    "id": 3,
+    "serviceId": 3,
+    "clientId": 203,
+    "rating": 5,
+    "comment": "Excelente manutenção no ar condicionado. Ficou gelando como novo!"
+  },
+  {
+    "id": 4,
+    "serviceId": 4,
+    "clientId": 204,
+    "rating": 5,
+    "comment": "Professor super didático! Minha filha tirou nota máxima depois das aulas."
+  },
+  {
+    "id": 5,
+    "serviceId": 5,
+    "clientId": 205,
+    "rating": 4,
+    "comment": "Consultoria de design muito criativa. O ambiente ficou lindo, só achei o prazo um pouco apertado."
+  },
+  {
+    "id": 6,
+    "serviceId": 6,
+    "clientId": 206,
+    "rating": 5,
+    "comment": "O Luke adora o passeador! Sempre volta feliz e cansado."
+  },
+  {
+    "id": 7,
+    "serviceId": 7,
+    "clientId": 207,
+    "rating": 5,
+    "comment": "Tradução impecável e entregue antes do prazo. Recomendo!"
+  },
+  {
+    "id": 8,
+    "serviceId": 8,
+    "clientId": 208,
+    "rating": 4,
+    "comment": "Website funcional e bonito. Houve um pequeno atraso na entrega, mas o resultado final compensou."
+  },
+  {
+    "id": 9,
+    "serviceId": 9,
+    "clientId": 209,
+    "rating": 5,
+    "comment": "Frete rápido e eficiente para minha mudança pequena. Preço justo."
+  },
+  {
+    "id": 10,
+    "serviceId": 10,
+    "clientId": 210,
+    "rating": 5,
+    "comment": "Corte de cabelo excelente, exatamente como pedi. Barbeiro muito atencioso."
+  }
+]

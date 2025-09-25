@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "Vini ",
+    "email": "vinaaa@gmail.com",
+    "password": "123",
+    "userType": "client",
+    "location": "Cm"
+  },
+  {
+    "id": 2,
+    "name": "Amanda ",
+    "email": "mama@mail.com",
+    "password": "123",
+    "userType": "provider",
+    "location": "Cm"
+  }
+]

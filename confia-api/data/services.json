@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "providerId": 101,
+    "title": "Instalação Elétrica Residencial",
+    "description": "Instalação e manutenção elétrica completa para residências, incluindo fiação, tomadas e disjuntores.",
+    "category": "Eletricista",
+    "price": 150
+  },
+  {
+    "id": 2,
+    "providerId": 102,
+    "title": "Limpeza Pós-Obra",
+    "description": "Serviço especializado de limpeza pesada após reformas ou construções, removendo entulhos e resíduos.",
+    "category": "Limpeza",
+    "price": 300
+  },
+  {
+    "id": 3,
+    "providerId": 101,
+    "title": "Manutenção de Ar Condicionado",
+    "description": "Limpeza, carga de gás e reparos em sistemas de ar condicionado split e de janela.",
+    "category": "Refrigeração",
+    "price": 180
+  },
+  {
+    "id": 4,
+    "providerId": 103,
+    "title": "Aula Particular de Matemática",
+    "description": "Aulas personalizadas de matemática para ensino fundamental, médio e preparatório para concursos.",
+    "category": "Educação",
+    "price": 80
+  },
+  {
+    "id": 5,
+    "providerId": 104,
+    "title": "Design de Interiores Online",
+    "description": "Consultoria e projeto de design de interiores remoto, otimizando espaços e escolhendo mobiliário.",
+    "category": "Design",
+    "price": 450
+  },
+  {
+    "id": 6,
+    "providerId": 105,
+    "title": "Passeador de Cães",
+    "description": "Passeios diários e cuidadosos para cães de todos os portes, com atenção à segurança e bem-estar.",
+    "category": "Serviços Pet",
+    "price": 50
+  },
+  {
+    "id": 7,
+    "providerId": 106,
+    "title": "Tradução de Textos (Inglês-Português)",
+    "description": "Tradução profissional de documentos, artigos e websites do inglês para o português e vice-versa.",
+    "category": "Tradução",
+    "price": 0.15
+  },
+  {
+    "id": 8,
+    "providerId": 107,
+    "title": "Desenvolvimento de Website Básico",
+    "description": "Criação de websites responsivos e otimizados para pequenas empresas e profissionais autônomos.",
+    "category": "TI e Web",
+    "price": 800
+  },
+  {
+    "id": 9,
+    "providerId": 108,
+    "title": "Serviço de Frete e Pequenas Mudanças",
+    "description": "Transporte de móveis e objetos para pequenas mudanças e entregas em área urbana.",
+    "category": "Transporte",
+    "price": 250
+  },
+  {
+    "id": 10,
+    "providerId": 109,
+    "title": "Corte de Cabelo Masculino",
+    "description": "Corte de cabelo moderno e tradicional, com barba e acabamento incluso.",
+    "category": "Beleza",
+    "price": 60
+  },
+  {
+    "id": 11,
+    "providerId": 2,
+    "title": "Programadora",
+    "description": "Sou uma ótima programadora",
+    "category": "Tecnologia ",
+    "price": 120
+  }
+]
